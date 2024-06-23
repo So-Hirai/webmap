@@ -21,7 +21,7 @@
 			function leafletJS(json) {
 				const map = L.map('map');
 
-				map.setView([35.8, 136.5], 5);
+				map.setView([35.8, 136.5], 5); //Mapを表示する緯度経度、倍率
 				L.control.scale({ imperial: false, position: 'bottomright' }).addTo(map); // 目盛表示(長さ)
 
 				//OpenStreetMap:タイルを作成：Mapに追加
