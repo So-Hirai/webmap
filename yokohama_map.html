@@ -146,6 +146,8 @@
                 .then(response => response.json())
                 .then(data => {
                     excite.addData(data);
+                    excite.addTo(map); // マップに追加
+                    excite.bringToFront(); //前面に移動
                 })
                 .catch(error => console.log(error));
               
