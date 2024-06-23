@@ -66,6 +66,24 @@
             //var jpn_prefecture = L.geoJson('https://disaportaldata.gsi.go.jp/raster/05_nadarekikenkasyo/{z}/{x}/{y}.png',
                 //{ opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
 
+            // 県ごとの色を定義
+            var youtoColors = {
+                "第１種低層住居専用地域": "#00FF99",
+                "第２種低層住居専用地域": "#00552E",
+                "第１種中高層住居専用地域": "#92D050",
+                "第２種中高層住居専用地域": "#CCFF99",
+                "第１種住居地域": "#FFFF66",
+                "第１種住居地域": "#FFCC99",
+                "準住居地域": "#FFCC66",
+                "田園住居地域": "#C4D79B",
+                "近隣商業地域": "#FF66CC",
+                "商業地域": "#FF0066",
+                "準工業地域": "#9900FF",
+                "工業地域": "#CCFFFF",
+                "工業専用地域": "#33CCFF"
+
+            };
+                
             // スタイルの設定
             var japanStyle = {
                 "color": "#ff7800",
@@ -77,24 +95,41 @@
                 "color": "#007bff",
                 "weight": 3,
                 "opacity": 0.8
-            };                
+            };        
+            
+            // 用途地域ごとのスタイルを決定する関数
+            function youtoStyle(feature) {
+                return {
+                    "color": youtoColors[feature.properties.用途地域] || "#FF7800", // デフォルト色
+                    "weight": 2,
+                    "opacity": 0.65
+                };
+            }            
 
             // 空のGeoJSONレイヤーを作成
             var jpn_prefecture = L.geoJSON(null, {style: japanStyle});
             var tokyoLayer = L.geoJSON(null, {style: tokyoStyle});
+            var youto = L.geoJSON(null, {style: youtoStyle});
 
             // GeoJSONデータを読み込み、レイヤーに追加
-            fetch('./data/japan.geojson')
+            fetch('data/japan.geojson')
                 .then(response => response.json())
                 .then(data => {
                     jpn_prefecture.addData(data);
                 })
                 .catch(error => console.log(error));
 
-            fetch('./data/tokyo.geojson')
+            fetch('data/tokyo.geojson')
                 .then(response => response.json())
                 .then(data => {
                     tokyoLayer.addData(data);
+                })
+                .catch(error => console.log(error));
+
+            fetch('data/yokohama_youto.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    youto.addData(data);
                 })
                 .catch(error => console.log(error));
               
@@ -119,7 +154,8 @@
             "陰影起伏図": gsirehillshademap,
             "色別標高図": gsirelief,
             "都道府県境": jpn_prefecture,
-            "東京都": tokyoLayer
+            "東京都": tokyoLayer,
+            "用途地域": youto
             };
 
             L.control.layers(baseMaps, overlayMaps).addTo(map);
