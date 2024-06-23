@@ -1,76 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Leafletで地理院地図を表示する#2</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
-<script>
-  // (4)マーカーリスト
-  var markerList = [
-    { pos: [35.65860384361886, 139.70164418220523], name: "渋谷駅" },
-    { pos: [35.67131255658154, 139.70271706581119], name: "原宿駅" },
-    { pos: [35.665246098220976, 139.71256613731387], name: "表参道駅" },
-    { pos: [35.646887024262085, 139.7099053859711], name: "恵比寿駅" },
-    { pos: [35.66324127644291, 139.73219990730288], name: "六本木駅" }
-  ];
+    <meta charset="UTF-8">
+    <title>Leaflet Preview</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
- function init() {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+    integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+    crossorigin=""></script>
 
-// (2)ズームコントロールのデフォルト解除
-   var map = L.map('map', { zoomControl: false }); 
-   map.setView([35.658825, 139.702904], 5); 
-   L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
-          attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
-      }).addTo(map);
-      //(1)スケールコントロールを最大幅200px、右下、m単位で地図に追加
-      L.control.scale({ maxWidth: 200, position: 'bottomright', imperial: false }).addTo(map);
-      //(2)ズームコントロールを左下で地図に追加
-      L.control.zoom({ position: 'bottomleft' }).addTo(map);
+    <script>
+      // (4)マーカーリスト
+      var markerList = [
+        { pos: [35.65860384361886, 139.70164418220523], name: "渋谷駅" },
+        { pos: [35.67131255658154, 139.70271706581119], name: "原宿駅" },
+        { pos: [35.665246098220976, 139.71256613731387], name: "表参道駅" },
+        { pos: [35.646887024262085, 139.7099053859711], name: "恵比寿駅" },
+        { pos: [35.66324127644291, 139.73219990730288], name: "六本木駅" }
+      ];
 
-      //(3)背景地図の指定
-      var gsiattr = "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>地理院タイル</a>";
-      var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', { attribution: gsiattr });
-      var gsipale = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', { attribution: gsiattr });
-      var osm = L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
-          { attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" });
+     function init() {
 
-      //(3)重畳表示する地図の指定
-      var gsirelief = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png', { opacity: 0.7, maxNativeZoom: 15, attribution: gsiattr });
-      var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 0.5, maxNativeZoom: 16, attribution: gsiattr });
-      var gsiseamlessphoto = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', { attribution: gsiattr });
+    // (2)ズームコントロールのデフォルト解除
+       var map = L.map('map', { zoomControl: false }); 
+       map.setView([35.658825, 139.702904], 5); 
+       L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+              attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
+          }).addTo(map);
+          //(1)スケールコントロールを最大幅200px、右下、m単位で地図に追加
+          L.control.scale({ maxWidth: 200, position: 'bottomright', imperial: false }).addTo(map);
+          //(2)ズームコントロールを左下で地図に追加
+          L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-      //(3)背景地図の切替・重畳表示機能
-      var baseMaps = {
-        "地理院地図": gsi,
-        "淡色地図": gsipale,
-        "オープンストリートマップ": osm,
-        "航空写真(日本)"  : gsiseamlessphoto
-      };
-      var overlayMaps = {
-        "色別標高図": gsirelief,
-        "陰影起伏図": gsirehillshademap
-      };
-      L.control.layers(baseMaps, overlayMaps).addTo(map);
-      // (3)デフォルトで表示する地図の指定
-      gsi.addTo(map);
+          //(3)背景地図の指定
+          var gsiattr = "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>地理院タイル</a>";
+          var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', { attribution: gsiattr });
+          var gsipale = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', { attribution: gsiattr });
+          var osm = L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
+              { attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" });
 
-      //(4)マーカー全体が入るボックスを作る
-      var bound = L.latLngBounds(markerList[0].pos, markerList[0].pos);
-      //(4)マーカーを追加
-      for (var num in markerList) {
-        var mk = markerList[num];
-        var popup = L.popup().setContent(mk.name);
-        L.marker(mk.pos, { title: mk.name }).bindPopup(popup).addTo(map);
-        //(4)マーカー全体が入るボックスを広げる
-        bound.extend(mk.pos);
-      }
-      //(4)マーカー全体が入るように地図範囲を設定
-      map.fitBounds(bound);
-    }
-  </script>
-</head>
-<body onload="init()">
-<div id="map" style="width:100%;height:600px"></div>
+          //(3)重畳表示する地図の指定
+          var gsirelief = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png', { opacity: 0.7, maxNativeZoom: 15, attribution: gsiattr });
+          var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 0.5, maxNativeZoom: 16, attribution: gsiattr });
+          var gsiseamlessphoto = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', { attribution: gsiattr });
+
+          //(3)背景地図の切替・重畳表示機能
+          var baseMaps = {
+            "地理院地図": gsi,
+            "淡色地図": gsipale,
+            "オープンストリートマップ": osm,
+            "航空写真(日本)"  : gsiseamlessphoto
+          };
+          var overlayMaps = {
+            "色別標高図": gsirelief,
+            "陰影起伏図": gsirehillshademap
+          };
+          L.control.layers(baseMaps, overlayMaps).addTo(map);
+          // (3)デフォルトで表示する地図の指定
+          gsi.addTo(map);
+
+          //(4)マーカー全体が入るボックスを作る
+          var bound = L.latLngBounds(markerList[0].pos, markerList[0].pos);
+          //(4)マーカーを追加
+          for (var num in markerList) {
+            var mk = markerList[num];
+            var popup = L.popup().setContent(mk.name);
+            L.marker(mk.pos, { title: mk.name }).bindPopup(popup).addTo(map);
+            //(4)マーカー全体が入るボックスを広げる
+            bound.extend(mk.pos);
+          }
+          //(4)マーカー全体が入るように地図範囲を設定
+          map.fitBounds(bound);
+        }
+      </script>
+    </head>
+    <body onload="init()">
+    <div id="map" style="width:100%;height:600px"></div>
 </body>
 </html>
