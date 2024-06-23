@@ -102,14 +102,21 @@
                 return {
                     "color": youtoColors[feature.properties.用途地域] || "#FF7800", // デフォルト色
                     "weight": 2,
-                    "opacity": 0.7
+                    "opacity": 0.8
                 };
-            }            
+            }
+
+            var exciteStyle = {
+                "color": "#0000ff",
+                "weight": 4,
+                "opacity": 0.0
+            };                    
 
             // 空のGeoJSONレイヤーを作成
             var jpn_prefecture = L.geoJSON(null, {style: japanStyle});
             var tokyoLayer = L.geoJSON(null, {style: tokyoStyle});
             var youto = L.geoJSON(null, {style: youtoStyle});
+            var excite = L.geoJSON(null, {style: exciteStyle});
 
             // GeoJSONデータを読み込み、レイヤーに追加
             fetch('data/japan.geojson')
@@ -130,6 +137,13 @@
                 .then(response => response.json())
                 .then(data => {
                     youto.addData(data);
+                })
+                .catch(error => console.log(error));
+
+            fetch('data/excite_yokohama_area.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    excite.addData(data);
                 })
                 .catch(error => console.log(error));
               
@@ -155,7 +169,8 @@
             "色別標高図": gsirelief,
             "都道府県境": jpn_prefecture,
             "東京都": tokyoLayer,
-            "用途地域": youto
+            "用途地域": youto,
+            "エキサイトよこはま22": excite
             };
 
             L.control.layers(baseMaps, overlayMaps).addTo(map);
@@ -166,7 +181,11 @@
             var legend = L.control({ position: 'bottomright' });
 
             legend.onAdd = function (map) {
-                var div = L.DomUtil.create('div', 'info legend');
+                var div = L.DomUtil.create('div', 'info legend collapsed');
+                var title = L.DomUtil.create('div', 'title', div);
+                title.innerHTML = '凡例 用途地域';
+                var content = L.DomUtil.create('div', 'content', div);
+
                 var labels = [];
 
                 for (var key in youtoColors) {
@@ -175,10 +194,22 @@
                         key);
                 }
 
-                div.innerHTML = labels.join('<br>');
+                content.innerHTML = labels.join('<br>');
                 return div;
             };
+
             legend.addTo(map);
+
+            // 凡例のタイトルをクリックすると内容を表示/非表示に切り替え
+            document.querySelector('.legend .title').addEventListener('click', function() {
+                var legend = this.parentElement;
+                if (legend.classList.contains('collapsed')) {
+                    legend.classList.remove('collapsed');
+                } else {
+                    legend.classList.add('collapsed');
+                }
+            });
+            
 
             //(4)マーカー全体が入るボックスを作る
             var bound = L.latLngBounds(markerList[0].pos, markerList[0].pos);
