@@ -15,92 +15,129 @@
     crossorigin=""></script>
 
     <script>
-          // (4)マーカーリスト
-          var markerList = [
-            { pos: [35.465959468464696, 139.62213173340814], name: "横浜駅" },
-            { pos: [35.465959468464696, 139.62213173340814], name: "横浜駅" }
-          ];
+            // (4)マーカーリスト
+            var markerList = [
+                { pos: [35.465959468464696, 139.62213173340814], name: "横浜駅" },
+                { pos: [35.465959468464696, 139.62213173340814], name: "横浜駅" }
+            ];
 
-         function init() {
+            function init() {
 
-        // (2)ズームコントロールのデフォルト解除
-           var map = L.map('map', { zoomControl: false }); 
-           map.setView([35.465959468464696, 139.62213173340814], 5); 
-           L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
-                  attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
-              }).addTo(map);
-              //(1)スケールコントロールを最大幅200px、右下、m単位で地図に追加
-              L.control.scale({ maxWidth: 200, position: 'bottomright', imperial: false }).addTo(map);
-              //(2)ズームコントロールを左下で地図に追加
-              L.control.zoom({ position: 'bottomleft' }).addTo(map);
+            // (2)ズームコントロールのデフォルト解除
+            var map = L.map('map', { zoomControl: false }); 
+            map.setView([35.465959468464696, 139.62213173340814], 5); 
+            L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+                attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
+                }).addTo(map);
+            //(1)スケールコントロールを最大幅200px、右下、m単位で地図に追加
+            L.control.scale({ maxWidth: 200, position: 'bottomright', imperial: false }).addTo(map);
+            //(2)ズームコントロールを左下で地図に追加
+            L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-              //(3)背景地図の指定
-              var gsiattr = "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>地理院タイル</a>";
-              var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', { attribution: gsiattr });
-              var gsipale = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', { attribution: gsiattr });
-              var osm = L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
-                  { attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" });
-              var gsiseamlessphoto = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', { attribution: gsiattr });
+            //(3)背景地図の指定
+            var gsiattr = "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>地理院タイル</a>";
+            var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', { attribution: gsiattr });
+            var gsipale = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', { attribution: gsiattr });
+            var osm = L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
+                { attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" });
+            var gsiseamlessphoto = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', { attribution: gsiattr });
 
-              //(3)重畳表示する地図の指定
-              var gsirelief = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png', { opacity: 0.7, maxNativeZoom: 15, attribution: gsiattr });
-              var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 0.5, maxNativeZoom: 16, attribution: gsiattr });
-              var hazardmap_01_flood_l2_shinsuishin = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png',
-                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
-              var hazardmap_01_flood_l2_keizoku = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_keizoku_data/{z}/{x}/{y}.png',
-                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
-              var hazardmap_02_naisui = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/02_naisui_data/{z}/{x}/{y}.png',
-                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
-              var hazardmap_03_hightide_l2_shinsuishin = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/03_hightide_l2_shinsuishin_data/{z}/{x}/{y}.png',
-                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
-              var hazardmap_04_tsunami_newlegend = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/04_tsunami_newlegend_data/{z}/{x}/{y}.png',
-                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
-              var hazardmap_05_dosekiryukeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_dosekiryukeikaikuiki/{z}/{x}/{y}.png',
-                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
-              var hazardmap_05_kyukeishakeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_kyukeishakeikaikuiki/{z}/{x}/{y}.png',
-                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
-              var hazardmap_05_jisuberikeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_jisuberikeikaikuiki/{z}/{x}/{y}.png',
-                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
-              var hazardmap_05_nadarekikenkasyo = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_nadarekikenkasyo/{z}/{x}/{y}.png',
-                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            //(3)重畳表示する地図の指定
+            var gsirelief = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png', { opacity: 0.7, maxNativeZoom: 15, attribution: gsiattr });
+            var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 0.5, maxNativeZoom: 16, attribution: gsiattr });
+            var hazardmap_01_flood_l2_shinsuishin = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png',
+                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var hazardmap_01_flood_l2_keizoku = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_keizoku_data/{z}/{x}/{y}.png',
+                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var hazardmap_02_naisui = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/02_naisui_data/{z}/{x}/{y}.png',
+                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var hazardmap_03_hightide_l2_shinsuishin = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/03_hightide_l2_shinsuishin_data/{z}/{x}/{y}.png',
+                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var hazardmap_04_tsunami_newlegend = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/04_tsunami_newlegend_data/{z}/{x}/{y}.png',
+                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var hazardmap_05_dosekiryukeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_dosekiryukeikaikuiki/{z}/{x}/{y}.png',
+                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var hazardmap_05_kyukeishakeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_kyukeishakeikaikuiki/{z}/{x}/{y}.png',
+                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var hazardmap_05_jisuberikeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_jisuberikeikaikuiki/{z}/{x}/{y}.png',
+                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var hazardmap_05_nadarekikenkasyo = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_nadarekikenkasyo/{z}/{x}/{y}.png',
+                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            //var jpn_prefecture = L.geoJson('https://disaportaldata.gsi.go.jp/raster/05_nadarekikenkasyo/{z}/{x}/{y}.png',
+                //{ opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+
+            // スタイルの設定
+            var japanStyle = {
+                "color": "#ff7800",
+                "weight": 2,
+                "opacity": 0.65
+            };
+
+            var tokyoStyle = {
+                "color": "#007bff",
+                "weight": 3,
+                "opacity": 0.8
+            };                
+
+            // 空のGeoJSONレイヤーを作成
+            var jpn_prefecture = L.geoJSON(null, {style: japanStyle});
+            var tokyoLayer = L.geoJSON(null, {style: tokyoStyle});
+
+            // GeoJSONデータを読み込み、レイヤーに追加
+            fetch('./data/japan.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    jpn_prefecture.addData(data);
+                })
+                .catch(error => console.log(error));
+
+            fetch('./data/tokyo.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    tokyoLayer.addData(data);
+                })
+                .catch(error => console.log(error));
               
 
-              //(3)背景地図の切替・重畳表示機能（下に行くほどレイヤーは上に表示）
-              var baseMaps = {
-                "地理院地図": gsi,
-                "淡色地図": gsipale,
-                "オープンストリートマップ": osm,
-                "航空写真(日本)"  : gsiseamlessphoto
-              };
-              var overlayMaps = {
-                "洪水浸水想定区域（想定最大規模）": hazardmap_01_flood_l2_shinsuishin,
-                "浸水継続時間（想定最大規模）": hazardmap_01_flood_l2_keizoku,
-                "内水（雨水出水）浸水想定区域": hazardmap_02_naisui,
-                "高潮浸水想定区域": hazardmap_03_hightide_l2_shinsuishin,
-                "津波浸水想定区域": hazardmap_04_tsunami_newlegend,
-                "土砂災害警戒区域（土石流）": hazardmap_05_dosekiryukeikaikuiki,
-                "土砂災害警戒区域（急傾斜地の崩壊）": hazardmap_05_kyukeishakeikaikuiki,
-                "土砂災害警戒区域（地すべり）": hazardmap_05_jisuberikeikaikuiki,
-                "雪崩危険箇所": hazardmap_05_nadarekikenkasyo,
-                "陰影起伏図": gsirehillshademap,
-                "色別標高図": gsirelief
-              };
-              L.control.layers(baseMaps, overlayMaps).addTo(map);
-              // (3)デフォルトで表示する地図の指定
-              gsipale.addTo(map);
+            //(3)背景地図の切替・重畳表示機能（下に行くほどレイヤーは上に表示）
+            var baseMaps = {
+            "地理院地図": gsi,
+            "淡色地図": gsipale,
+            "オープンストリートマップ": osm,
+            "航空写真(日本)"  : gsiseamlessphoto
+            };
+            var overlayMaps = {
+            "洪水浸水想定区域（想定最大規模）": hazardmap_01_flood_l2_shinsuishin,
+            "浸水継続時間（想定最大規模）": hazardmap_01_flood_l2_keizoku,
+            "内水（雨水出水）浸水想定区域": hazardmap_02_naisui,
+            "高潮浸水想定区域": hazardmap_03_hightide_l2_shinsuishin,
+            "津波浸水想定区域": hazardmap_04_tsunami_newlegend,
+            "土砂災害警戒区域（土石流）": hazardmap_05_dosekiryukeikaikuiki,
+            "土砂災害警戒区域（急傾斜地の崩壊）": hazardmap_05_kyukeishakeikaikuiki,
+            "土砂災害警戒区域（地すべり）": hazardmap_05_jisuberikeikaikuiki,
+            "雪崩危険箇所": hazardmap_05_nadarekikenkasyo,
+            "陰影起伏図": gsirehillshademap,
+            "色別標高図": gsirelief,
+            "都道府県境": jpn_prefecture,
+            "東京都": tokyoLayer
+            };
 
-              //(4)マーカー全体が入るボックスを作る
-              var bound = L.latLngBounds(markerList[0].pos, markerList[0].pos);
-              //(4)マーカーを追加
-              for (var num in markerList) {
-                var mk = markerList[num];
-                var popup = L.popup().setContent(mk.name);
-                L.marker(mk.pos, { title: mk.name }).bindPopup(popup).addTo(map);
-                //(4)マーカー全体が入るボックスを広げる
-                bound.extend(mk.pos);
-              }
-              //(4)マーカー全体が入るように地図範囲を設定
-              map.fitBounds(bound);
+            L.control.layers(baseMaps, overlayMaps).addTo(map);
+            // (3)デフォルトで表示する地図の指定
+            gsipale.addTo(map);
+
+            //(4)マーカー全体が入るボックスを作る
+            var bound = L.latLngBounds(markerList[0].pos, markerList[0].pos);
+            //(4)マーカーを追加
+            for (var num in markerList) {
+            var mk = markerList[num];
+            var popup = L.popup().setContent(mk.name);
+            L.marker(mk.pos, { title: mk.name }).bindPopup(popup).addTo(map);
+            //(4)マーカー全体が入るボックスを広げる
+            bound.extend(mk.pos);
+            }
+            //(4)マーカー全体が入るように地図範囲を設定
+            map.fitBounds(bound);
             }
     </script>
 </head>
