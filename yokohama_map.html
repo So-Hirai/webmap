@@ -97,7 +97,13 @@
                 "weight": 3,
                 "opacity": 0.8
             };        
-            
+
+            var exciteStyle = {
+                "color": "#007bff",
+                "weight": 3,
+                "opacity": 0.8
+            };           
+
             // 用途地域ごとのスタイルを決定する関数
             function youtoStyle(feature) {
                 return {
@@ -106,12 +112,7 @@
                     "opacity": 0.9
                 };
             }
-
-            var exciteStyle = {
-                "color": "#007bff",
-                "weight": 3,
-                "opacity": 0.8
-            };                    
+               
 
             // 空のGeoJSONレイヤーを作成
             var jpn_prefecture = L.geoJSON(null, {style: japanStyle});
