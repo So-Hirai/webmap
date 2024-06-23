@@ -102,7 +102,7 @@
                 return {
                     "color": youtoColors[feature.properties.用途地域] || "#FF7800", // デフォルト色
                     "weight": 2,
-                    "opacity": 0.65
+                    "opacity": 0.7
                 };
             }            
 
@@ -161,6 +161,24 @@
             L.control.layers(baseMaps, overlayMaps).addTo(map);
             // (3)デフォルトで表示する地図の指定
             gsipale.addTo(map);
+
+            // 凡例の作成
+            var legend = L.control({ position: 'bottomright' });
+
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend');
+                var labels = [];
+
+                for (var key in youtoColors) {
+                    labels.push(
+                        '<i style="background:' + youtoColors[key] + '"></i> ' +
+                        key);
+                }
+
+                div.innerHTML = labels.join('<br>');
+                return div;
+            };
+
 
             //(4)マーカー全体が入るボックスを作る
             var bound = L.latLngBounds(markerList[0].pos, markerList[0].pos);
