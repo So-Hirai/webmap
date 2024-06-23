@@ -63,6 +63,7 @@
                 { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
             var hazardmap_05_nadarekikenkasyo = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_nadarekikenkasyo/{z}/{x}/{y}.png',
                 { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var takuchi_capital2005 = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/lum4bl_capital2005/{z}/{x}/{y}.png', { opacity: 0.5, maxNativeZoom: 16, attribution: gsiattr });
             //var jpn_prefecture = L.geoJson('https://disaportaldata.gsi.go.jp/raster/05_nadarekikenkasyo/{z}/{x}/{y}.png',
                 //{ opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
 
@@ -109,7 +110,7 @@
             var exciteStyle = {
                 "color": "#0000ff",
                 "weight": 4,
-                "opacity": 0.0
+                "fillOpacity": 0.0
             };                    
 
             // 空のGeoJSONレイヤーを作成
@@ -156,6 +157,7 @@
             "航空写真(日本)"  : gsiseamlessphoto
             };
             var overlayMaps = {
+            "宅地利用動向調査（2005年）": takuchi_capital2005,
             "洪水浸水想定区域（想定最大規模）": hazardmap_01_flood_l2_shinsuishin,
             "浸水継続時間（想定最大規模）": hazardmap_01_flood_l2_keizoku,
             "内水（雨水出水）浸水想定区域": hazardmap_02_naisui,
