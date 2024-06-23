@@ -44,12 +44,28 @@
 
               //(3)重畳表示する地図の指定
               var gsirelief = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png', { opacity: 0.7, maxNativeZoom: 15, attribution: gsiattr });
-              var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 1.0, maxNativeZoom: 16, attribution: gsiattr });
+              var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 0.5, maxNativeZoom: 16, attribution: gsiattr });
               var hazardmap_01_flood_l2_shinsuishin = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png',
-                  { opacity: 0.5, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+              var hazardmap_01_flood_l2_keizoku = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_keizoku_data/{z}/{x}/{y}.png',
+                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+              var hazardmap_02_naisui = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/02_naisui_data/{z}/{x}/{y}.png',
+                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+              var hazardmap_03_hightide_l2_shinsuishin = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/03_hightide_l2_shinsuishin_data/{z}/{x}/{y}.png',
+                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+              var hazardmap_04_tsunami_newlegend = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/04_tsunami_newlegend_data/{z}/{x}/{y}.png',
+                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+              var hazardmap_05_dosekiryukeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_dosekiryukeikaikuiki/{z}/{x}/{y}.png',
+                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+              var hazardmap_05_kyukeishakeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_kyukeishakeikaikuiki/{z}/{x}/{y}.png',
+                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+              var hazardmap_05_jisuberikeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_jisuberikeikaikuiki/{z}/{x}/{y}.png',
+                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+              var hazardmap_05_nadarekikenkasyo = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_nadarekikenkasyo/{z}/{x}/{y}.png',
+                  { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
               
 
-              //(3)背景地図の切替・重畳表示機能
+              //(3)背景地図の切替・重畳表示機能（下に行くほどレイヤーは上に表示）
               var baseMaps = {
                 "地理院地図": gsi,
                 "淡色地図": gsipale,
@@ -58,8 +74,16 @@
               };
               var overlayMaps = {
                 "洪水浸水想定区域（想定最大規模）": hazardmap_01_flood_l2_shinsuishin,
-                "色別標高図": gsirelief,
-                "陰影起伏図": gsirehillshademap
+                "浸水継続時間（想定最大規模）": hazardmap_01_flood_l2_keizoku,
+                "内水（雨水出水）浸水想定区域": hazardmap_02_naisui,
+                "高潮浸水想定区域": hazardmap_03_hightide_l2_shinsuishin,
+                "津波浸水想定区域": hazardmap_04_tsunami_newlegend,
+                "土砂災害警戒区域（土石流）": hazardmap_05_dosekiryukeikaikuiki,
+                "土砂災害警戒区域（急傾斜地の崩壊）": hazardmap_05_kyukeishakeikaikuiki,
+                "土砂災害警戒区域（地すべり）": hazardmap_05_jisuberikeikaikuiki,
+                "雪崩危険箇所": hazardmap_05_nadarekikenkasyo,
+                "陰影起伏図": gsirehillshademap,
+                "色別標高図": gsirelief
               };
               L.control.layers(baseMaps, overlayMaps).addTo(map);
               // (3)デフォルトで表示する地図の指定
