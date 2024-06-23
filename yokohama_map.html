@@ -178,7 +178,7 @@
                 div.innerHTML = labels.join('<br>');
                 return div;
             };
-
+            legend.addTo(map);
 
             //(4)マーカー全体が入るボックスを作る
             var bound = L.latLngBounds(markerList[0].pos, markerList[0].pos);
