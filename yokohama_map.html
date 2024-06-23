@@ -17,18 +17,15 @@
     <script>
           // (4)マーカーリスト
           var markerList = [
-            { pos: [35.65860384361886, 139.70164418220523], name: "渋谷駅" },
-            { pos: [35.67131255658154, 139.70271706581119], name: "原宿駅" },
-            { pos: [35.665246098220976, 139.71256613731387], name: "表参道駅" },
-            { pos: [35.646887024262085, 139.7099053859711], name: "恵比寿駅" },
-            { pos: [35.66324127644291, 139.73219990730288], name: "六本木駅" }
+            { pos: [35.465959468464696, 139.62213173340814], name: "横浜駅" },
+            { pos: [35.465959468464696, 139.62213173340814], name: "横浜駅" }
           ];
 
          function init() {
 
         // (2)ズームコントロールのデフォルト解除
            var map = L.map('map', { zoomControl: false }); 
-           map.setView([35.658825, 139.702904], 5); 
+           map.setView([35.465959468464696, 139.62213173340814], 5); 
            L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
                   attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
               }).addTo(map);
@@ -47,9 +44,9 @@
 
               //(3)重畳表示する地図の指定
               var gsirelief = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png', { opacity: 0.7, maxNativeZoom: 15, attribution: gsiattr });
-              var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 0.5, maxNativeZoom: 16, attribution: gsiattr });
+              var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 1.0, maxNativeZoom: 16, attribution: gsiattr });
               var hazardmap_01_flood_l2_shinsuishin = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png',
-                  { attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                  { opacity: 0.5, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
               
 
               //(3)背景地図の切替・重畳表示機能
