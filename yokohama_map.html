@@ -24,9 +24,11 @@
             function init() {
 
             // (2)ズームコントロールのデフォルト解除
-            var map = L.map('map', { zoomControl: false }); 
+            var map = L.map('map', { zoomControl: false , maxZoom: 20}); 
             map.setView([35.465959468464696, 139.62213173340814], 5); 
             L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+                maxZoom: 24, 
+                maxNativeZoom: 18, 
                 attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
                 }).addTo(map);
             //(1)スケールコントロールを最大幅200px、右下、m単位で地図に追加
@@ -36,34 +38,36 @@
 
             //(3)背景地図の指定
             var gsiattr = "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>地理院タイル</a>";
-            var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', { attribution: gsiattr });
-            var gsipale = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', { attribution: gsiattr });
-            var osm = L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
-                { attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" });
-            var gsiseamlessphoto = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', { attribution: gsiattr });
+            var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', { maxZoom: 24, maxNativeZoom: 18, attribution: gsiattr });
+            var gsipale = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', { maxZoom: 24, maxNativeZoom: 18, attribution: gsiattr });
+            var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                { maxZoom: 24, attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" });
+            var osmjp = L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
+                { maxZoom: 24, attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" });
+            var gsiseamlessphoto = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', { maxZoom: 24, maxNativeZoom: 18, attribution: gsiattr });
 
             //(3)重畳表示する地図の指定
-            var gsirelief = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png', { opacity: 0.7, maxNativeZoom: 15, attribution: gsiattr });
-            var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 0.5, maxNativeZoom: 16, attribution: gsiattr });
+            var gsirelief = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png', { opacity: 0.7, maxZoom: 24, maxNativeZoom: 18, attribution: gsiattr });
+            var gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 0.5, maxZoom: 24, maxNativeZoom: 18, attribution: gsiattr });
             var hazardmap_01_flood_l2_shinsuishin = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png',
-                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                { maxZoom: 24, maxNativeZoom: 17, opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
             var hazardmap_01_flood_l2_keizoku = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_keizoku_data/{z}/{x}/{y}.png',
-                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                { maxZoom: 24, maxNativeZoom: 17, opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
             var hazardmap_02_naisui = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/02_naisui_data/{z}/{x}/{y}.png',
-                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                { maxZoom: 24, maxNativeZoom: 17, opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
             var hazardmap_03_hightide_l2_shinsuishin = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/03_hightide_l2_shinsuishin_data/{z}/{x}/{y}.png',
-                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                { maxZoom: 24, maxNativeZoom: 17, opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
             var hazardmap_04_tsunami_newlegend = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/04_tsunami_newlegend_data/{z}/{x}/{y}.png',
-                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                { maxZoom: 24, maxNativeZoom: 17, opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
             var hazardmap_05_dosekiryukeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_dosekiryukeikaikuiki/{z}/{x}/{y}.png',
-                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                { maxZoom: 24, maxNativeZoom: 17, opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
             var hazardmap_05_kyukeishakeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_kyukeishakeikaikuiki/{z}/{x}/{y}.png',
-                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                { maxZoom: 24, maxNativeZoom: 17, opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
             var hazardmap_05_jisuberikeikaikuiki = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_jisuberikeikaikuiki/{z}/{x}/{y}.png',
-                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+                { maxZoom: 24, maxNativeZoom: 17, opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
             var hazardmap_05_nadarekikenkasyo = L.tileLayer('https://disaportaldata.gsi.go.jp/raster/05_nadarekikenkasyo/{z}/{x}/{y}.png',
-                { opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
-            var takuchi_capital2005 = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/lum4bl_capital2005/{z}/{x}/{y}.png', { opacity: 0.5, maxNativeZoom: 16, attribution: gsiattr });
+                { maxZoom: 24, maxNativeZoom: 17, opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
+            var takuchi_capital2005 = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/lum4bl_capital2005/{z}/{x}/{y}.png', { opacity: 0.5, maxZoom: 24, maxNativeZoom: 18, attribution: gsiattr });
             //var jpn_prefecture = L.geoJson('https://disaportaldata.gsi.go.jp/raster/05_nadarekikenkasyo/{z}/{x}/{y}.png',
                 //{ opacity: 0.7, attribution: "<a href='https://disaportal.gsi.go.jp/index.html' target='_blank'>ハザードマップポータルサイト</a>" });
 
@@ -157,7 +161,8 @@
             var baseMaps = {
             "地理院地図": gsi,
             "淡色地図": gsipale,
-            "オープンストリートマップ": osm,
+            "OpenStreetMap": osm,
+            "OpenStreetMap Japan": osmjp,
             "航空写真(日本)"  : gsiseamlessphoto
             };
             var overlayMaps = {
@@ -183,6 +188,26 @@
             excite.bringToFront(); //前面に移動
             // (3)デフォルトで表示する地図の指定
             gsipale.addTo(map);
+
+            // 現在地を取得してマップにマーカーを表示
+            map.locate({ setView: true, maxZoom: 18 });
+
+            function onLocationFound(e) {
+                var radius = e.accuracy / 2;
+
+                L.marker(e.latlng).addTo(map)
+                    .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+                L.circle(e.latlng, radius).addTo(map);
+            }
+
+            function onLocationError(e) {
+                alert(e.message);
+            }
+
+            map.on('locationfound', onLocationFound);
+            map.on('locationerror', onLocationError);
+
 
             // 凡例の作成
             var legend = L.control({ position: 'bottomright' });
