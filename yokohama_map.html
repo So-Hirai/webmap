@@ -11,6 +11,7 @@
     crossorigin=""/>
     <link rel="stylesheet" href="./css/index.css" type="text/css">
     <link rel="stylesheet" href="css/L.Control.Locate.min.css" /> 
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
     integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
     crossorigin=""></script>
@@ -195,23 +196,16 @@
             gsipale.addTo(map);
 
             // 現在地を取得してマップにマーカーを表示
-            map.locate({ setView: true, maxZoom: 18 });
 
-            function onLocationFound(e) {
-                var radius = e.accuracy / 2;
 
-                L.marker(e.latlng).addTo(map)
-                    .bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-                L.circle(e.latlng, radius).addTo(map);
-            }
-
-            function onLocationError(e) {
-                alert(e.message);
-            }
-
-            map.on('locationfound', onLocationFound);
-            map.on('locationerror', onLocationError);
+            var lc = L.control
+                .locate({
+                    position: "bottomleft",
+                    strings: {
+                    title: "Show me where I am, yo!"
+                    }
+                })
+                .addTo(map);
 
 
             // 凡例の作成
