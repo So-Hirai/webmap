@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="./css/index.css" type="text/css">
     <link rel="stylesheet" href="css/L.Control.Locate.min.css" /> 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
     integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
     crossorigin=""></script>
@@ -200,7 +204,7 @@
 
             var lc = L.control
                 .locate({
-                    position: "bottomleft",
+                    position: "bottomleft", // topleft, topright, bottomleft, bottomright
                     strings: {
                     title: "Show me where I am, yo!"
                     }
